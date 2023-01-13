@@ -1,6 +1,5 @@
 package com.todolist.todolist;
 
-
 import java.time.LocalDate;
 
 public class User {
@@ -43,7 +42,7 @@ public class User {
         return email;
     }
 
-    public LocalDate getBirthDate() throws ValidationException {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
@@ -55,8 +54,8 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public void verifyPassword() throws Exception {
-        if(!(this.password.length() > 8) || !(this.password.length() < 40)) {
+    public boolean isValidPassword() throws Exception {
+        if(this.password.length() < 8  || this.password.length() > 40) {
             throw PasswordsException.invalidLength();
         }
 
@@ -68,35 +67,51 @@ public class User {
             throw PasswordsException.noLowerCase();
         }
 
-        if(!this.password.matches(".*[0-9].*")) {
+        if(!this.password.matches(".*\\d.*")) {
             throw PasswordsException.noNumber();
         }
+
+        return true;
     }
 
-    public void verifyEmail() throws ValidationException {
+    public boolean isValidEmail() throws ValidationException {
         if(!email.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
             throw new ValidationException("Invalid email");
         }
+
+        return true;
     }
 
-    public void verifyBirthDate() throws ValidationException {
-        if(birthDate.isAfter(LocalDate.now().minusYears(13))) {
+    public boolean isValidBirthday() throws ValidationException {
+        if(this.getBirthDate().isAfter(LocalDate.now().minusYears(13))) {
             throw new ValidationException("Invalid birth date");
         }
+        
+        return true;
     }
 
-    public void verifyFnameLname() throws ValidationException {
-        if (fname.isEmpty() || lname.isEmpty()) {
-            throw new ValidationException("Invalid first name or last name");
+    public boolean isValidFname() throws ValidationException {
+        if (fname.isEmpty()) {
+            throw new ValidationException("Invalid first name");
         }
+
+        return true;
     }
 
+    public boolean isValidLname() throws ValidationException {
+        if (lname.isEmpty()) {
+            throw new ValidationException("Invalid last name");
+        }
+
+        return true;
+    }
 
     public boolean isValid() throws Exception {
-        this.verifyPassword();
-        this.verifyEmail();
-        this.verifyBirthDate();
-        this.verifyFnameLname();
+        this.isValidPassword();
+        this.isValidEmail();
+        this.isValidBirthday();
+        this.isValidFname();
+        this.isValidLname();
 
         return true;
     }
