@@ -1,11 +1,10 @@
 package com.todolist.todolist;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ToDoList {
 
-    private final ArrayList<Integer> itemList = new ArrayList<Integer>();
+    private final ArrayList<Integer> itemList = new ArrayList<>();
 
     public void initList(){
         for(int i = 1; i<8; i++){
@@ -24,11 +23,9 @@ public class ToDoList {
     }
 
     public boolean lastTwoItems(){
-        if(this.itemList.size() == 7){
-            EmailSenderService emailSender = new EmailSenderService();
-            return emailSender.sendEmail();
-        }
+        if(this.itemList.size() != 7) return false;
 
-        return false;
+        EmailSenderService emailSender = new EmailSenderService();
+        return emailSender.sendEmail();
     }
 }
