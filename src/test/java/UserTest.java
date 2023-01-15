@@ -68,6 +68,7 @@ class UserTest {
         doThrow(ValidationException.class).when(user).isValid();
         assertFalse(user.isValidLname());
     }
+
     @Test
     void userWithValidLname() throws Exception {
         when(user.getEmail()).thenReturn("perez");
