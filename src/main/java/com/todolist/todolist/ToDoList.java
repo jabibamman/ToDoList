@@ -38,7 +38,7 @@ public class ToDoList {
     }
 
     public boolean lastTwoItems(){
-        if(this.itemList.size() != 7) return false;
+        if(this.items.size() != 7) return false;
 
         EmailSenderService emailSender = new EmailSenderService();
         return emailSender.sendEmail();
