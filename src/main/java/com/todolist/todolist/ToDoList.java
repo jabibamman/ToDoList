@@ -1,25 +1,40 @@
 package com.todolist.todolist;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ToDoList {
+    ArrayList<Item> items;
+    LocalDateTime dateDernierAjout;
 
-    private final ArrayList<Integer> itemList = new ArrayList<>();
-
-    public void initList(){
-        for(int i = 1; i<8; i++){
-            this.itemList.add(i);
-        }
+    public ToDoList() {
+        items = new ArrayList<>();
     }
-    public void addItem(int value){
-        if(this.lastTwoItems()){
-            System.out.println("Il ne reste de place que pour 2 derniers items");
-        }
-        this.itemList.add(value);
+    public ToDoList(ArrayList<Item> items) {
+        this.items = items;
     }
 
-    public void displayToDoList(){
-        System.out.println(this.itemList);
+    public void addItem(Item item) {
+        if(isAddItemPossible()) {
+            if(lastTwoItems()) {
+                System.out.println("Il ne reste de place que pour 2 derniers items");
+            }
+            items.add(item);
+            dateDernierAjout = LocalDateTime.now();
+        }
+        else {
+            throw new RuntimeException("Impossible d'ajouter un item dans la ToDoList");
+        }
+    }
+
+    public boolean isAddItemPossible() {
+        if(items.size() > 10) {
+            return false;
+        }
+        else if(dateDernierAjout.isAfter(LocalDateTime.now().minusMinutes(30))) {
+            return false;
+        }
+        return true;
     }
 
     public boolean lastTwoItems(){
