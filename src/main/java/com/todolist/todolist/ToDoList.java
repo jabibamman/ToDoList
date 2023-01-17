@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ToDoList {
-    ArrayList<Item> items;
-    LocalDateTime dateDernierAjout;
+    private final ArrayList<Item> items;
+    private LocalDateTime dateDernierAjout;
 
     public ToDoList() {
         items = new ArrayList<>();
@@ -15,12 +15,12 @@ public class ToDoList {
     }
 
     public void addItem(Item item) {
-        if(isAddItemPossible()) {
-            if(lastTwoItems()) {
+        if(this.isAddItemPossible()) {
+            if(this.lastTwoItems()) {
                 System.out.println("Il ne reste de place que pour 2 derniers items");
             }
-            items.add(item);
-            dateDernierAjout = LocalDateTime.now();
+            this.items.add(item);
+            this.dateDernierAjout = LocalDateTime.now();
         }
         else {
             throw new RuntimeException("Impossible d'ajouter un item dans la ToDoList");
@@ -28,13 +28,20 @@ public class ToDoList {
     }
 
     public boolean isAddItemPossible() {
-        if(items.size() > 10) {
+        if(this.items.size() > 10) {
+            System.out.println("Vous ne pouvez pas ajouter plus de 10 objets");
             return false;
         }
-        else if(dateDernierAjout.isAfter(LocalDateTime.now().minusMinutes(30))) {
+        else if(!this.timerValid()){
+            System.out.println("Vous ne pouvez pas ajouter d'objets en moins de 30min");
             return false;
         }
         return true;
+    }
+
+    public boolean timerValid(){
+        if(this.dateDernierAjout != null) return !this.dateDernierAjout.isAfter(LocalDateTime.now().minusMinutes(30));
+        else return true;
     }
 
     public boolean lastTwoItems(){
