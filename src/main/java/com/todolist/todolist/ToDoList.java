@@ -28,7 +28,7 @@ public class ToDoList {
     }
 
     public boolean isAddItemPossible() {
-        if(this.items.size() > 10) {
+        if(this.items.size() >= 10) {
             System.out.println("Vous ne pouvez pas ajouter plus de 10 objets");
             return false;
         }
