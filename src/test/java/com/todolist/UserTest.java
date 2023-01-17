@@ -1,20 +1,23 @@
-import com.todolist.PasswordsException;
-import com.todolist.User;
-import com.todolist.ValidationException;
+package com.todolist;
+
+import com.todolist.utils.VerifyPassword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UserTest {
 
     User user;
+    VerifyPassword verifyPassword;
 
     //mock setup
     @BeforeEach
     void setup() {
        user = mock(User.class);
+       verifyPassword = mock(VerifyPassword.class);
     }
 
     @Test
@@ -79,38 +82,40 @@ class UserTest {
 
     @Test
     void userWithInvalidPasswordWithoutNumberUppercaseAndNotMinmumCarac() throws Exception {
-        when(user.getPassword()).thenReturn("abcd");
-        doThrow(PasswordsException.class).when(user).isValidPassword();
-        assertThrows(PasswordsException.class, user::isValidPassword);
+        doReturn("abcd").when(user).getPassword();
+        assertThrows(PasswordsException.class, () -> {
+            verifyPassword.isValidObj(user.getPassword());
+        });
     }
 
     @Test
     void userWithInvalidPasswordWithoutNumberUppercase() throws Exception {
-        when(user.getPassword()).thenReturn("abcdoaid");
-        doThrow(PasswordsException.class).when(user).isValidPassword();
-        assertThrows(PasswordsException.class, user::isValidPassword);
+        doReturn("abcdoaid").when(user).getPassword();
+        assertThrows(PasswordsException.class, () -> {
+            verifyPassword.isValidObj(user.getPassword());
+        });
     }
 
     @Test
     void userWithInvalidPasswordWithoutNumber() throws Exception {
-        when(user.getPassword()).thenReturn("abcdOAid");
-        doThrow(PasswordsException.class).when(user).isValidPassword();
-        assertThrows(PasswordsException.class, user::isValidPassword);
+        doReturn("abcdOAid").when(user).getPassword();
+        assertThrows(PasswordsException.class, () -> {
+            verifyPassword.isValidObj(user.getPassword());
+        });
     }
 
     @Test
     void userWithInvalidPasswordWithoutUppercase() throws Exception {
-        when(user.getPassword()).thenReturn("abc1doaid");
-        doThrow(PasswordsException.class).when(user).isValidPassword();
-        assertThrows(PasswordsException.class, user::isValidPassword);
+        doReturn("abcd1234").when(user).getPassword();
+        assertThrows(PasswordsException.class, () -> {
+            verifyPassword.isValidObj(user.getPassword());
+        });
     }
 
     @Test
     void userWithValidPassword() throws Exception {
-        when(user.getPassword()).thenReturn("Abbcd123");
-        assertDoesNotThrow(user::isValidPassword);
-        doReturn(true).when(user).isValidPassword();
-        assertTrue(user.isValidPassword());
+        doReturn("Abc1doaid").when(user).getPassword();
+        assertTrue(verifyPassword.isValidObj(user.getPassword()));
     }
 
     @Test

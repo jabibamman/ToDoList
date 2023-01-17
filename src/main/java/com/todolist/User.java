@@ -2,6 +2,8 @@ package com.todolist;
 
 import java.time.LocalDate;
 
+import com.todolist.utils.VerifyPassword;
+
 public class User {
     private String email, fname, lname, password;
     LocalDate birthDate;
@@ -57,26 +59,6 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public boolean isValidPassword() throws Exception {
-        if(this.password.length() < 8  || this.password.length() > 40) {
-            throw PasswordsException.invalidLength();
-        }
-
-        if(!this.password.matches(".*[A-Z].*")) {
-            throw PasswordsException.noUpperCase();
-        }
-
-        if(!this.password.matches(".*[a-z].*")) {
-            throw PasswordsException.noLowerCase();
-        }
-
-        if(!this.password.matches(".*\\d.*")) {
-            throw PasswordsException.noNumber();
-        }
-
-        return true;
-    }
-
     public boolean isValidEmail() throws ValidationException {
         if(!email.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
             throw new ValidationException("Invalid email");
@@ -114,7 +96,9 @@ public class User {
         this.isValidFname();
         this.isValidLname();
         this.isValidBirthday();
-        this.isValidPassword();
+        // use isValidObj from VerifyPassword class but not static
+        VerifyPassword verifyPassword = new VerifyPassword();
+        verifyPassword.isValidObj(this.password);
 
         return true;
     }
