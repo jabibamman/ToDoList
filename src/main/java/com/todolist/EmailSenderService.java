@@ -1,4 +1,4 @@
-package com.todolist.todolist;
+package com.todolist;
 
 public class EmailSenderService {
     public boolean sendEmail(){

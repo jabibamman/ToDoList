@@ -1,6 +1,6 @@
-import com.todolist.todolist.PasswordsException;
-import com.todolist.todolist.User;
-import com.todolist.todolist.ValidationException;
+import com.todolist.PasswordsException;
+import com.todolist.User;
+import com.todolist.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;

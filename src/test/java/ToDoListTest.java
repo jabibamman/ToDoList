@@ -1,6 +1,5 @@
-import com.todolist.todolist.Item;
-import com.todolist.todolist.ToDoList;
-import com.todolist.todolist.ValidationException;
+import com.todolist.Item;
+import com.todolist.ToDoList;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
