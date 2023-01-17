@@ -2,29 +2,26 @@ package com.todolist.utils;
 
 import com.todolist.PasswordsException;
 
-public class VerifyPassword<T> implements TodoTils {
+public class VerifyPassword {
+    public VerifyPassword() { throw new AssertionError("No com.todolist.utils.VerifyPassword instances for you!"); }
 
-    @Override
-    public boolean isValidObj(Object password) throws Exception {
-        if(String.valueOf(password).length() < 8  || String.valueOf(password).length() > 40) {
+    public boolean isValidStr(String password) throws Exception {
+        if(password.length() < 8  || password.length() > 40) {
             throw PasswordsException.invalidLength();
         }
 
-        if(!String.valueOf(password).matches(".*[A-Z].*")) {
+        if(!password.matches(".*[A-Z].*")) {
             throw PasswordsException.noUpperCase();
         }
 
-        if(!String.valueOf(password).matches(".*[a-z].*")) {
+        if(!password.matches(".*[a-z].*")) {
             throw PasswordsException.noLowerCase();
         }
 
-        if(!String.valueOf(password).matches(".*\\d.*")) {
+        if(!password.matches(".*\\d.*")) {
             throw PasswordsException.noNumber();
         }
 
         return true;
     }
-
-    public VerifyPassword() {}
-
 }

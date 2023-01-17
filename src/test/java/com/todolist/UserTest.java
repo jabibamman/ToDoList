@@ -1,6 +1,6 @@
 package com.todolist;
 
-import com.todolist.utils.VerifyPassword;
+import com.todolist.utils.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
@@ -8,16 +8,25 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+
 class UserTest {
 
     User user;
     VerifyPassword verifyPassword;
+    VerifyFname verifyFname;
+    VerifyLname verifyLname;
+    VerifyEmail verifyEmail;
+    VerifyBirthDate verifyBirthDate;
 
     //mock setup
     @BeforeEach
     void setup() {
        user = mock(User.class);
        verifyPassword = mock(VerifyPassword.class);
+       verifyFname = mock(VerifyFname.class);
+       verifyLname = mock(VerifyLname.class);
+       verifyEmail = mock(VerifyEmail.class);
+       verifyBirthDate = mock(VerifyBirthDate.class);
     }
 
     @Test
@@ -52,71 +61,88 @@ class UserTest {
 
     @Test
     void userWithInvalidEmptyFname() throws Exception {
-        when(user.getFname()).thenReturn("");
-        doThrow(ValidationException.class).when(user).isValid();
-        assertFalse(user.isValidFname());
+        String fname = "";
+        doThrow(ValidationException.class).when(verifyFname).isValidStr(fname);
+        assertThrows(PasswordsException.class, () -> {
+            verifyFname.isValidStr(fname);
+        });
     }
 
     @Test
     void userWithValidFname() throws Exception {
-        when(user.getFname()).thenReturn("daniel");
-        assertDoesNotThrow(user::isValidFname);
-        doReturn(true).when(user).isValidFname();
-        assertTrue(user.isValidFname());
+        String fname = "Jean";
+        assertDoesNotThrow(() -> {
+            verifyFname.isValidStr(fname);
+        });
+        doReturn(true).when(verifyFname).isValidStr(fname);
+        assertTrue(verifyFname.isValidStr(fname));
     }
 
     @Test
     void userWithInvalidEmptyLname() throws Exception {
-        when(user.getLname()).thenReturn("");
-        doThrow(ValidationException.class).when(user).isValid();
-        assertFalse(user.isValidLname());
+        String lname = "";
+        doThrow(ValidationException.class).when(verifyLname).isValidStr(lname);
+        assertThrows(PasswordsException.class, () -> {
+            verifyLname.isValidStr(lname);
+        });
     }
 
     @Test
     void userWithValidLname() throws Exception {
-        when(user.getEmail()).thenReturn("perez");
-        assertDoesNotThrow(user::isValidLname);
-        doReturn(true).when(user).isValidLname();
-        assertTrue(user.isValidLname());
+        String lname = "Perez";
+        assertDoesNotThrow(() -> {
+            verifyLname.isValidStr(lname);
+        });
+        doReturn(true).when(verifyLname).isValidStr(lname);
+        assertTrue(verifyLname.isValidStr(lname));
     }
 
     @Test
     void userWithInvalidPasswordWithoutNumberUppercaseAndNotMinmumCarac() throws Exception {
-        doReturn("abcd").when(user).getPassword();
+        String password = "abcd";
+        doThrow(PasswordsException.invalidLength()).when(verifyPassword).isValidStr(password);
         assertThrows(PasswordsException.class, () -> {
-            verifyPassword.isValidObj(user.getPassword());
+            verifyPassword.isValidStr(password);
         });
     }
 
     @Test
     void userWithInvalidPasswordWithoutNumberUppercase() throws Exception {
-        doReturn("abcdoaid").when(user).getPassword();
+        String password = "abcd1234";
+        doThrow(PasswordsException.noUpperCase()).when(verifyPassword).isValidStr(password);
         assertThrows(PasswordsException.class, () -> {
-            verifyPassword.isValidObj(user.getPassword());
+            verifyPassword.isValidStr(password);
         });
     }
 
     @Test
     void userWithInvalidPasswordWithoutNumber() throws Exception {
-        doReturn("abcdOAid").when(user).getPassword();
+        String password = "abcdAid";
+        doThrow(PasswordsException.noNumber()).when(verifyPassword).isValidStr(password);
         assertThrows(PasswordsException.class, () -> {
-            verifyPassword.isValidObj(user.getPassword());
+            verifyPassword.isValidStr(password);
         });
     }
 
     @Test
     void userWithInvalidPasswordWithoutUppercase() throws Exception {
-        doReturn("abcd1234").when(user).getPassword();
+        String password = "abcd1234";
+        doThrow(PasswordsException.noUpperCase()).when(verifyPassword).isValidStr(password);
         assertThrows(PasswordsException.class, () -> {
-            verifyPassword.isValidObj(user.getPassword());
+            verifyPassword.isValidStr(password);
         });
     }
 
     @Test
     void userWithValidPassword() throws Exception {
-        doReturn("Abc1doaid").when(user).getPassword();
-        assertTrue(verifyPassword.isValidObj(user.getPassword()));
+        String password = "abcdA123";
+        assertDoesNotThrow(() -> {
+            verifyPassword.isValidStr(password);
+        });
+        doReturn(true).when(verifyPassword).isValidStr(password);
+        assertTrue(verifyPassword.isValidStr(password));
     }
+
 
     @Test
     void isValid() throws Exception {

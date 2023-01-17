@@ -2,7 +2,6 @@ package com.todolist.controller;
 
 import com.todolist.Main;
 import com.todolist.User;
-import com.todolist.utils.TodoTils;
 import com.todolist.utils.VerifyPassword;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -15,8 +14,8 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 
 public class RegistrationController {
-    static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
-    VerifyPassword verifyPassword = new VerifyPassword();
+    static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
+    VerifyPassword verifyPassword;
 
     @FXML
     private TextField emailField;
@@ -50,9 +49,8 @@ public class RegistrationController {
 
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
-        // q: i have isValidObj in TodoTils interface, i use in verifypassword, how i can use into RegistrationController?
-        // a: you can use it like this:
-        if (password.equals(confirmPassword) && verifyPassword.isValidObj(password)) {
+
+        if (password.equals(confirmPassword) && verifyPassword.isValidStr(password)) {
             User user = new User(email, fname, lname, birthDate, password);
             LOGGER.debug("{}", user);
         } else {
