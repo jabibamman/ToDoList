@@ -1,17 +1,20 @@
-package com.todolist.todolist;
+package com.todolist;
 
 import java.time.LocalDate;
 
 public class User {
     private String email, fname, lname, password;
     LocalDate birthDate;
+    ToDoList todoList;
 
-    public User(String email, String fname, String lname, LocalDate birthDate, String password) {
+    public User(String email, String fname, String lname, LocalDate birthDate, String password) throws Exception {
         this.email = email;
         this.fname = fname;
         this.lname = lname;
         this.birthDate = birthDate;
         this.password = password;
+        this.todoList = new ToDoList();
+        this.isValid();
     }
 
     public String getFname() {
@@ -107,12 +110,18 @@ public class User {
     }
 
     public boolean isValid() throws Exception {
-        this.isValidPassword();
         this.isValidEmail();
-        this.isValidBirthday();
         this.isValidFname();
         this.isValidLname();
+        this.isValidBirthday();
+        this.isValidPassword();
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User [birthDate=" + birthDate + ", email=" + email + ", fname=" + fname + ", lname=" + lname
+                + ", password=" + password + ", todoList=" + todoList + "]";
     }
 }

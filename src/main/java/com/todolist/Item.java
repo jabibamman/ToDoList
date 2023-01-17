@@ -1,4 +1,4 @@
-package com.todolist.todolist;
+package com.todolist;
 
 public class Item {
     private String name;
@@ -23,9 +23,6 @@ public class Item {
     }
 
     public boolean isContentValid() {
-        if(content.length() > 1000) {
-            return false;
-        }
-        return true;
+        return content.length() <= 1000;
     }
 }

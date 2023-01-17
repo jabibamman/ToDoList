@@ -1,4 +1,4 @@
-package com.todolist.todolist;
+package com.todolist;
 
 public class PasswordsException extends Exception {
     public PasswordsException(String message) {
