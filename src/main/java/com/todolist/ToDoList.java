@@ -46,7 +46,7 @@ public class ToDoList {
     }
 
     public boolean timerValid(){
-        //if(this.dateDernierAjout != null) return !this.dateDernierAjout.isAfter(LocalDateTime.now().minusMinutes(30));
+        if(this.dateDernierAjout != null) return !this.dateDernierAjout.isAfter(LocalDateTime.now().minusMinutes(30));
         return true;
     }
 
@@ -59,14 +59,21 @@ public class ToDoList {
 
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("ToDoList (").append(this.items.size()).append(" items, dernier ajout : ").append(this.dateDernierAjout.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))).append(") :\n");
-        for (Item item : this.items) {
-            result.append(" - ").append(item.getName()).append(" : ").append(item.getContent()).append(" (").append(item.isContentValid() ? "valide" : "non valide").append(")");
-            if (this.items.indexOf(item) == this.items.size() - 1) {
-                result.append("\n");
-            } else {
-                result.append(", \n");
+
+        if(this.dateDernierAjout != null) {
+            result.append("ToDoList (").append(this.items.size()).append(" items, dernier ajout : ").append(this.dateDernierAjout.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))).append(") :\n");
+
+            for (Item item : this.items) {
+                result.append(" - ").append(item.getName()).append(" : ").append(item.getContent()).append(" (").append(item.isContentValid() ? "valide" : "non valide").append(")");
+                if (this.items.indexOf(item) == this.items.size() - 1) {
+                    result.append("\n");
+                } else {
+                    result.append(", \n");
+                }
             }
+
+        }else{
+            result.append("ToDoList (").append(this.items.size()).append(" items)\n");
         }
 
         return result.toString();

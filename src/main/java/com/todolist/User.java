@@ -2,10 +2,19 @@ package com.todolist;
 
 import java.time.LocalDate;
 
+import com.todolist.utils.*;
+
 public class User {
     private String email, fname, lname, password;
     LocalDate birthDate;
     ToDoList todoList;
+
+    private VerifyPassword verifyPassword;
+    private VerifyFname verifyFname;
+    private VerifyLname verifyLname;
+    private VerifyEmail verifyEmail;
+    private VerifyBirthDate verifyBirthDate;
+
 
     public User(String email, String fname, String lname, LocalDate birthDate, String password) throws Exception {
         this.email = email;
@@ -14,6 +23,11 @@ public class User {
         this.birthDate = birthDate;
         this.password = password;
         this.todoList = new ToDoList();
+        this.verifyPassword = new VerifyPassword();
+        this.verifyFname = new VerifyFname();
+        this.verifyLname = new VerifyLname();
+        this.verifyEmail = new VerifyEmail();
+        this.verifyBirthDate = new VerifyBirthDate();
         this.isValid();
     }
 
@@ -57,64 +71,16 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public boolean isValidPassword() throws Exception {
-        if(this.password.length() < 8  || this.password.length() > 40) {
-            throw PasswordsException.invalidLength();
-        }
-
-        if(!this.password.matches(".*[A-Z].*")) {
-            throw PasswordsException.noUpperCase();
-        }
-
-        if(!this.password.matches(".*[a-z].*")) {
-            throw PasswordsException.noLowerCase();
-        }
-
-        if(!this.password.matches(".*\\d.*")) {
-            throw PasswordsException.noNumber();
-        }
-
-        return true;
-    }
-
-    public boolean isValidEmail() throws ValidationException {
-        if(!email.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
-            throw new ValidationException("Invalid email");
-        }
-
-        return true;
-    }
-
-    public boolean isValidBirthday() throws ValidationException {
-        if(this.getBirthDate().isAfter(LocalDate.now().minusYears(13))) {
-            throw new ValidationException("Invalid birth date");
-        }
-        
-        return true;
-    }
-
-    public boolean isValidFname() throws ValidationException {
-        if (fname.isEmpty()) {
-            throw new ValidationException("Invalid first name");
-        }
-
-        return true;
-    }
-
-    public boolean isValidLname() throws ValidationException {
-        if (lname.isEmpty()) {
-            throw new ValidationException("Invalid last name");
-        }
-
-        return true;
+    public ToDoList getToDoList() {
+        return todoList;
     }
 
     public boolean isValid() throws Exception {
-        this.isValidEmail();
-        this.isValidFname();
-        this.isValidLname();
-        this.isValidBirthday();
-        this.isValidPassword();
+        verifyEmail.isValidStr(this.email);
+        verifyFname.isValidStr(this.fname);
+        verifyLname.isValidStr(this.lname);
+        verifyBirthDate.isValidStr(this.birthDate);
+        verifyPassword.isValidStr(this.password);
 
         return true;
     }

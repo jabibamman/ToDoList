@@ -1,6 +1,7 @@
 package com.todolist;
 
 public class PasswordsException extends Exception {
+    String message;
     public PasswordsException(String message) {
         super(message);
     }
@@ -19,5 +20,10 @@ public class PasswordsException extends Exception {
 
     public static Exception noNumber() {
         return new PasswordsException("Password must contain at least one number");
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }
