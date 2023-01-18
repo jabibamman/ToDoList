@@ -23,6 +23,11 @@ public class User {
         this.birthDate = birthDate;
         this.password = password;
         this.todoList = new ToDoList();
+        this.verifyPassword = new VerifyPassword();
+        this.verifyFname = new VerifyFname();
+        this.verifyLname = new VerifyLname();
+        this.verifyEmail = new VerifyEmail();
+        this.verifyBirthDate = new VerifyBirthDate();
         this.isValid();
     }
 
@@ -66,6 +71,9 @@ public class User {
         this.birthDate = birthDate;
     }
 
+    public ToDoList getToDoList() {
+        return todoList;
+    }
 
     public boolean isValid() throws Exception {
         verifyEmail.isValidStr(this.email);

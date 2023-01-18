@@ -46,7 +46,7 @@ public class ToDoList {
     }
 
     public boolean timerValid(){
-        //if(this.dateDernierAjout != null) return !this.dateDernierAjout.isAfter(LocalDateTime.now().minusMinutes(30));
+        if(this.dateDernierAjout != null) return !this.dateDernierAjout.isAfter(LocalDateTime.now().minusMinutes(30));
         return true;
     }
 

@@ -3,7 +3,7 @@ package com.todolist.utils;
 import com.todolist.PasswordsException;
 
 public class VerifyPassword {
-    public VerifyPassword() { throw new AssertionError("No com.todolist.utils.VerifyPassword instances for you!"); }
+    public VerifyPassword() { }
 
     public boolean isValidStr(String password) throws Exception {
         if(password.length() < 8  || password.length() > 40) {
