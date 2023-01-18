@@ -31,39 +31,47 @@ class UserTest {
 
     @Test
     void userWithValidDateIsValid() throws Exception {
-        when(user.getBirthDate()).thenReturn(LocalDate.of(LocalDate.now().getYear() - 18, 12, 12));
-        assertDoesNotThrow(user::getBirthDate);
-        doReturn(true).when(user).isValidBirthday();
-        assertTrue(user.isValidBirthday());
+        LocalDate date = LocalDate.of(LocalDate.now().getYear() - 18, 12, 12);
+        assertDoesNotThrow(() -> {
+            verifyBirthDate.isValidStr(date);
+        });
+        doReturn(true).when(verifyBirthDate).isValidStr(date);
+        assertTrue(verifyBirthDate.isValidStr(date));
     }
 
     @Test()
     void userWithInvalidDate() throws Exception {
-        when(user.getBirthDate()).thenReturn(LocalDate.of(LocalDate.now().getYear() - 10, 12, 12));
-        doThrow(ValidationException.class).when(user).isValidBirthday();
-        assertThrows(ValidationException.class, user::isValidBirthday);
+        LocalDate date = LocalDate.of(LocalDate.now().getYear() - 10, 12, 12);
+        doThrow(ValidationException.class).when(verifyBirthDate).isValidStr(date);
+        assertThrows(ValidationException.class, () -> {
+            verifyBirthDate.isValidStr(date);
+        });
     }
 
     @Test
     void userWithInvalidEmail() throws Exception {
-        when(user.getEmail()).thenReturn("perezgmail.com");
-        doThrow(ValidationException.class).when(user).isValidEmail();
-        assertThrows(ValidationException.class, user::isValidEmail);
+        String email = "perezgmail.com";
+        doThrow(ValidationException.class).when(verifyEmail).isValidStr(email);
+        assertThrows(ValidationException.class, () -> {
+            verifyEmail.isValidStr(email);
+        });
     }
 
     @Test
     void userWithValidEmail() throws Exception {
-        when(user.getEmail()).thenReturn("perez@gmail.com");
-        assertDoesNotThrow(user::isValidEmail);
-        doReturn(true).when(user).isValidEmail();
-        assertTrue(user.isValidEmail());
+        String email = "perez@gmail.com";
+        assertDoesNotThrow(() -> {
+            verifyEmail.isValidStr(email);
+        });
+        doReturn(true).when(verifyEmail).isValidStr(email);
+        assertTrue(verifyEmail.isValidStr(email));
     }
 
     @Test
     void userWithInvalidEmptyFname() throws Exception {
         String fname = "";
         doThrow(ValidationException.class).when(verifyFname).isValidStr(fname);
-        assertThrows(PasswordsException.class, () -> {
+        assertThrows(ValidationException.class, () -> {
             verifyFname.isValidStr(fname);
         });
     }
@@ -82,7 +90,7 @@ class UserTest {
     void userWithInvalidEmptyLname() throws Exception {
         String lname = "";
         doThrow(ValidationException.class).when(verifyLname).isValidStr(lname);
-        assertThrows(PasswordsException.class, () -> {
+        assertThrows(ValidationException.class, () -> {
             verifyLname.isValidStr(lname);
         });
     }
