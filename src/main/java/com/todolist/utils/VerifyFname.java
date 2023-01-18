@@ -1,6 +1,6 @@
 package com.todolist.utils;
 
-import com.todolist.ValidationException;
+import com.todolist.exception.ValidationException;
 
 public class VerifyFname {
     public VerifyFname() {}

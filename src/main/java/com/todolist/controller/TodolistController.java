@@ -1,8 +1,8 @@
 package com.todolist.controller;
 
-import com.todolist.Item;
-import com.todolist.ToDoList;
-import com.todolist.User;
+import com.todolist.app.Item;
+import com.todolist.app.ToDoList;
+import com.todolist.app.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;

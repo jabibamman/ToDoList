@@ -1,5 +1,8 @@
 package com.todolist;
 
+import com.todolist.app.User;
+import com.todolist.exception.PasswordsException;
+import com.todolist.exception.ValidationException;
 import com.todolist.utils.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

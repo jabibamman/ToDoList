@@ -1,6 +1,6 @@
 package com.todolist.utils;
 
-import com.todolist.PasswordsException;
+import com.todolist.exception.PasswordsException;
 
 public class VerifyPassword {
     public VerifyPassword() { }

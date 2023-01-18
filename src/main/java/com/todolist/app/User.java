@@ -1,7 +1,6 @@
-package com.todolist;
+package com.todolist.app;
 
 import java.time.LocalDate;
-
 import com.todolist.utils.*;
 
 public class User {

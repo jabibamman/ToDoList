@@ -1,6 +1,6 @@
 package com.todolist;
 
-import com.todolist.Item;
+import com.todolist.app.Item;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,7 +1,8 @@
-package com.todolist;
+package com.todolist.exception;
 
 public class PasswordsException extends Exception {
     String message;
+
     public PasswordsException(String message) {
         super(message);
     }

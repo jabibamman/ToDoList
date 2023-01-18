@@ -1,9 +1,9 @@
 package com.todolist.controller;
 
-import com.todolist.PasswordsException;
+import com.todolist.exception.PasswordsException;
 import com.todolist.TodoListApp;
-import com.todolist.User;
-import com.todolist.ValidationException;
+import com.todolist.app.User;
+import com.todolist.exception.ValidationException;
 import com.todolist.utils.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

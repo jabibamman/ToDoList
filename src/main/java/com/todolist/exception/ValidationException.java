@@ -1,4 +1,4 @@
-package com.todolist;
+package com.todolist.exception;
 
 public class ValidationException extends Exception {
     public ValidationException(String message) {

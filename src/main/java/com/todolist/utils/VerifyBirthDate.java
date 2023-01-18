@@ -1,6 +1,6 @@
 package com.todolist.utils;
 
-import com.todolist.ValidationException;
+import com.todolist.exception.ValidationException;
 
 import java.time.LocalDate;
 

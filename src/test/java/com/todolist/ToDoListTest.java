@@ -1,7 +1,7 @@
 package com.todolist;
 
-import com.todolist.Item;
-import com.todolist.ToDoList;
+import com.todolist.app.Item;
+import com.todolist.app.ToDoList;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

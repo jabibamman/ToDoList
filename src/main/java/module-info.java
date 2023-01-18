@@ -18,4 +18,10 @@ module com.todolist {
     opens com.todolist.controller to javafx.fxml;
     exports com.todolist.utils;
     opens com.todolist.utils to javafx.fxml;
+    exports com.todolist.exception;
+    opens com.todolist.exception to javafx.fxml;
+    exports com.todolist.app;
+    opens com.todolist.app to javafx.fxml;
+    exports com.todolist.service;
+    opens com.todolist.service to javafx.fxml;
 }

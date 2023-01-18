@@ -1,4 +1,4 @@
-package com.todolist;
+package com.todolist.app;
 
 public class Item {
     private String name;
