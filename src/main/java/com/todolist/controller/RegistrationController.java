@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class RegistrationController {
     static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
@@ -55,11 +56,18 @@ public class RegistrationController {
         String lname = lnameField.getText();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
-        LocalDate birthDate = birthDatePicker.getValue();
-        birthDate = birthDate != null ? LocalDate.of(birthDate.getYear(), birthDate.getMonth(), birthDate.getDayOfMonth()) : null;
-        assert birthDate != null;
+        LocalDate birthDate;
 
         try {
+            try {
+                birthDate = LocalDate.parse(birthDatePicker.getEditor().getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                birthDate = LocalDate.of(birthDate.getYear(), birthDate.getMonth(), birthDate.getDayOfMonth());
+            } catch (Exception e) {
+                errorLabel.setText("Please enter your birth date");
+                errorLabel.setVisible(true);
+                throw new ValidationException("Please enter your birth date");
+            }
+
             verifyEmail.isValidStr(email);
             verifyFname.isValidStr(fname);
             verifyLname.isValidStr(lname);
@@ -68,7 +76,7 @@ public class RegistrationController {
             if (!password.equals(confirmPassword)) { throw new PasswordsException("Passwords do not match"); }
 
             User user = new User(email, fname, lname, birthDate, password);
-            LOGGER.debug("User registered successfully with parameters: {}", user);
+            LOGGER.debug("User registered successfully with parameters: \n{}", user);
             errorLabel.setVisible(false);
 
             try {
@@ -92,7 +100,6 @@ public class RegistrationController {
                 e.printStackTrace();
             }
 
-            LOGGER.info("User registered successfully");
         } catch (Exception e) {
             errorLabel.setText(e.getMessage());
             errorLabel.setVisible(true);
