@@ -1,7 +1,9 @@
 package com.todolist.controller;
 
+import com.todolist.PasswordsException;
 import com.todolist.TodoListApp;
 import com.todolist.User;
+import com.todolist.ValidationException;
 import com.todolist.utils.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,17 +55,21 @@ public class RegistrationController {
         String lname = lnameField.getText();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
-
         LocalDate birthDate = birthDatePicker.getValue();
-        birthDate = LocalDate.of(birthDate.getYear(), birthDate.getMonth(), birthDate.getDayOfMonth());
+        birthDate = birthDate != null ? LocalDate.of(birthDate.getYear(), birthDate.getMonth(), birthDate.getDayOfMonth()) : null;
+        assert birthDate != null;
 
-        if (password.equals(confirmPassword) && verifyPassword.isValidStr(password) && verifyFname.isValidStr(fname)
-                && verifyLname.isValidStr(lname)
-                && verifyEmail.isValidStr(email)
-                && verifyBirthDate.isValidStr(birthDate))
-        {
+        try {
+            verifyEmail.isValidStr(email);
+            verifyFname.isValidStr(fname);
+            verifyLname.isValidStr(lname);
+            verifyBirthDate.isValidStr(birthDate);
+            verifyPassword.isValidStr(password);
+            if (!password.equals(confirmPassword)) { throw new PasswordsException("Passwords do not match"); }
+
             User user = new User(email, fname, lname, birthDate, password);
             LOGGER.debug("User registered successfully with parameters: {}", user);
+            errorLabel.setVisible(false);
 
             try {
                 // Charger la vue de la todolist
@@ -85,9 +91,15 @@ public class RegistrationController {
                 LOGGER.error("Error loading todolist view", e);
                 e.printStackTrace();
             }
-        } else {
-            errorLabel.setText("Invalid registration parameters");
-            LOGGER.warn("Invalid registration parameters");
+
+            LOGGER.info("User registered successfully");
+        } catch (Exception e) {
+            errorLabel.setText(e.getMessage());
+            errorLabel.setVisible(true);
+            LOGGER.error(e.getMessage());
+        } finally {
+            passwordField.setText("");
+            confirmPasswordField.setText("");
         }
     }
 
