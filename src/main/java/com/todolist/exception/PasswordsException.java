@@ -1,10 +1,11 @@
 package com.todolist.exception;
 
 public class PasswordsException extends Exception {
-    String message;
+    private final String message;
 
     public PasswordsException(String message) {
         super(message);
+        this.message = message;
     }
 
     public static Exception invalidLength() {

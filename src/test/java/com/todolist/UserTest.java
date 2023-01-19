@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-
 class UserTest {
 
     User user;
@@ -46,18 +45,14 @@ class UserTest {
     void userWithInvalidDate() throws Exception {
         LocalDate date = LocalDate.of(LocalDate.now().getYear() - 10, 12, 12);
         doThrow(ValidationException.class).when(verifyBirthDate).isValidStr(date);
-        assertThrows(ValidationException.class, () -> {
-            verifyBirthDate.isValidStr(date);
-        });
+        assertThrows(ValidationException.class, () -> verifyBirthDate.isValidStr(date));
     }
 
     @Test
     void userWithInvalidEmail() throws Exception {
         String email = "perezgmail.com";
         doThrow(ValidationException.class).when(verifyEmail).isValidStr(email);
-        assertThrows(ValidationException.class, () -> {
-            verifyEmail.isValidStr(email);
-        });
+        assertThrows(ValidationException.class, () -> verifyEmail.isValidStr(email));
     }
 
     @Test
@@ -74,9 +69,7 @@ class UserTest {
     void userWithInvalidEmptyFname() throws Exception {
         String fname = "";
         doThrow(ValidationException.class).when(verifyFname).isValidStr(fname);
-        assertThrows(ValidationException.class, () -> {
-            verifyFname.isValidStr(fname);
-        });
+        assertThrows(ValidationException.class, () -> verifyFname.isValidStr(fname));
     }
 
     @Test
@@ -93,9 +86,7 @@ class UserTest {
     void userWithInvalidEmptyLname() throws Exception {
         String lname = "";
         doThrow(ValidationException.class).when(verifyLname).isValidStr(lname);
-        assertThrows(ValidationException.class, () -> {
-            verifyLname.isValidStr(lname);
-        });
+        assertThrows(ValidationException.class, () -> verifyLname.isValidStr(lname));
     }
 
     @Test
@@ -112,36 +103,28 @@ class UserTest {
     void userWithInvalidPasswordWithoutNumberUppercaseAndNotMinmumCarac() throws Exception {
         String password = "abcd";
         doThrow(PasswordsException.invalidLength()).when(verifyPassword).isValidStr(password);
-        assertThrows(PasswordsException.class, () -> {
-            verifyPassword.isValidStr(password);
-        });
+        assertThrows(PasswordsException.class, () -> verifyPassword.isValidStr(password));
     }
 
     @Test
     void userWithInvalidPasswordWithoutNumberUppercase() throws Exception {
         String password = "abcd1234";
         doThrow(PasswordsException.noUpperCase()).when(verifyPassword).isValidStr(password);
-        assertThrows(PasswordsException.class, () -> {
-            verifyPassword.isValidStr(password);
-        });
+        assertThrows(PasswordsException.class, () -> verifyPassword.isValidStr(password));
     }
 
     @Test
     void userWithInvalidPasswordWithoutNumber() throws Exception {
         String password = "abcdAid";
         doThrow(PasswordsException.noNumber()).when(verifyPassword).isValidStr(password);
-        assertThrows(PasswordsException.class, () -> {
-            verifyPassword.isValidStr(password);
-        });
+        assertThrows(PasswordsException.class, () -> verifyPassword.isValidStr(password));
     }
 
     @Test
     void userWithInvalidPasswordWithoutUppercase() throws Exception {
         String password = "abcd1234";
         doThrow(PasswordsException.noUpperCase()).when(verifyPassword).isValidStr(password);
-        assertThrows(PasswordsException.class, () -> {
-            verifyPassword.isValidStr(password);
-        });
+        assertThrows(PasswordsException.class, () -> verifyPassword.isValidStr(password));
     }
 
     @Test
@@ -173,7 +156,7 @@ class UserTest {
         when(user.getLname()).thenReturn("");
         when(user.getEmail()).thenReturn("testgmail.com");
         when(user.getPassword()).thenReturn("Abcd123j");
-        when(user.getBirthDate()).thenReturn(LocalDate.of(LocalDate.now().getYear() - 18, 12, 12));
+        when(user.getBirthDate()).thenReturn(LocalDate.of(LocalDate.now().getYear() - 10, 12, 12));
         doThrow(ValidationException.class).when(user).isValid();
         assertThrows(ValidationException.class, user::isValid);
     }

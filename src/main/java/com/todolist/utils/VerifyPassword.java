@@ -3,7 +3,7 @@ package com.todolist.utils;
 import com.todolist.exception.PasswordsException;
 
 public class VerifyPassword {
-    public VerifyPassword() { }
+    public VerifyPassword() { /* Default constructor */ }
 
     public boolean isValidStr(String password) throws Exception {
         if(password.length() < 8  || password.length() > 40) {

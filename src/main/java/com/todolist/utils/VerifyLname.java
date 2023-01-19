@@ -3,7 +3,7 @@ package com.todolist.utils;
 import com.todolist.exception.ValidationException;
 
 public class VerifyLname {
-    public VerifyLname() {}
+    public VerifyLname() {  /* Default constructor */ }
 
     public boolean isValidStr(String lname) throws ValidationException {
         if (lname.isEmpty()) throw new ValidationException("Invalid last name");

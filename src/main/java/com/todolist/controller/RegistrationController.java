@@ -50,7 +50,7 @@ public class RegistrationController {
     private Label errorLabel;
 
     @FXML
-    public void onRegister() throws Exception {
+    public void onRegister() {
         String email = emailField.getText();
         String fname = fnameField.getText();
         String lname = lnameField.getText();
@@ -59,14 +59,7 @@ public class RegistrationController {
         LocalDate birthDate;
 
         try {
-            try {
-                birthDate = LocalDate.parse(birthDatePicker.getEditor().getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                birthDate = LocalDate.of(birthDate.getYear(), birthDate.getMonth(), birthDate.getDayOfMonth());
-            } catch (Exception e) {
-                errorLabel.setText("Please enter your birth date");
-                errorLabel.setVisible(true);
-                throw new ValidationException("Please enter your birth date");
-            }
+            birthDate = parseDate();
 
             verifyEmail.isValidStr(email);
             verifyFname.isValidStr(fname);
@@ -79,26 +72,8 @@ public class RegistrationController {
             LOGGER.debug("User registered successfully with parameters: \n{}", user);
             errorLabel.setVisible(false);
 
-            try {
-                // Charger la vue de la todolist
-                FXMLLoader loader = new FXMLLoader(TodoListApp.class.getResource("todolist.fxml"));
-                Parent root = loader.load();
-
-                // Récupérer la scène actuelle
-                Scene scene = emailField.getScene();
-
-                // Récupérer le contrôleur de la vue de la todolist
-                TodolistController todolistController = loader.getController();
-
-                // Définir l'utilisateur dans le contrôleur de la vue de la todolist
-                todolistController.setUser(user);
-
-                // Définir la nouvelle scène comme la scène actuelle
-                scene.setRoot(root);
-            } catch (IOException e) {
-                LOGGER.error("Error loading todolist view", e);
-                e.printStackTrace();
-            }
+            // change scene to todolist
+            changePage(user);
 
         } catch (Exception e) {
             errorLabel.setText(e.getMessage());
@@ -114,5 +89,51 @@ public class RegistrationController {
     public void onCancel() {
         LOGGER.info("Bye bye");
         System.exit(0);
+    }
+
+    public LocalDate parseDate() throws ValidationException {
+        LocalDate date;
+        try {
+            date = LocalDate.parse(birthDatePicker.getEditor().getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        } catch (Exception e) {
+            throw new ValidationException("Invalid birth date");
+        }
+
+        return parseDateWithFormat(date);
+    }
+
+
+    public LocalDate parseDateWithFormat(LocalDate birthDateToParse) throws ValidationException {
+        try {
+            birthDateToParse = LocalDate.of(birthDateToParse.getYear(), birthDateToParse.getMonth(), birthDateToParse.getDayOfMonth());
+        } catch (Exception e) {
+            errorLabel.setText("Please enter your birth date");
+            errorLabel.setVisible(true);
+            throw new ValidationException("Please enter your birth date");
+        }
+        return birthDateToParse;
+    }
+
+    public void changePage(User user) {
+        try {
+            // Charger la vue de la todolist
+            FXMLLoader loader = new FXMLLoader(TodoListApp.class.getResource("todolist.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer la scène actuelle
+            Scene scene = emailField.getScene();
+
+            // Récupérer le contrôleur de la vue de la todolist
+            TodolistController todolistController = loader.getController();
+
+            // Définir l'utilisateur dans le contrôleur de la vue de la todolist
+            todolistController.setUser(user);
+
+            // Définir la nouvelle scène comme la scène actuelle
+            scene.setRoot(root);
+        } catch (IOException e) {
+            LOGGER.error("Error loading todolist view", e);
+            e.printStackTrace();
+        }
     }
 }
