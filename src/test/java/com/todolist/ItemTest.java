@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ItemTest {
-    private Item item = new Item("name",
+class ItemTest {
+    private final Item item = new Item("name",
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et mollis arcu. Quisque mauris risus, " +
                     "pellentesque eget porttitor sit amet, consequat quis lacus. Curabitur lacinia consectetur commodo. " +
                     "Morbi venenatis tincidunt justo. Donec sem arcu, posuere quis lectus et, egestas facilisis felis. " +
@@ -20,7 +20,7 @@ public class ItemTest {
                     "est eget erat curae");
 
     @Test
-    public void isContentNotValidTest() {
+    void isContentNotValidTest() {
         item.setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et mollis arcu. Quisque mauris risus, " +
                 "pellentesque eget porttitor sit amet, consequat quis lacus. Curabitur lacinia consectetur commodo. " +
                 "Morbi venenatis tincidunt justo. Donec sem arcu, posuere quis lectus et, egestas facilisis felis. " +
@@ -36,7 +36,7 @@ public class ItemTest {
     }
 
     @Test
-    public void isItemValid() {
+    void isItemValid() {
         assertTrue(item.isContentValid());
     }
 }
