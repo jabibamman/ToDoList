@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
-class ToDoListTest {
+public class ToDoListTest {
 
     @Test
     void testAddItemValid() {

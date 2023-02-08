@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ItemTest {
+public class ItemTest {
 
     private final Item item = new Item("name",
             "a".repeat(1000));

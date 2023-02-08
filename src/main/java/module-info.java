@@ -13,6 +13,7 @@ module com.todolist {
 
     opens com.todolist to javafx.fxml;
 
+
     exports com.todolist;
     exports com.todolist.controller;
     opens com.todolist.controller to javafx.fxml;

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class UserTest {
+public class UserTest {
 
     User user;
     VerifyPassword verifyPassword;
