@@ -66,7 +66,7 @@ public class RegistrationController {
             verifyLname.isValidStr(lname);
             verifyBirthDate.isValidStr(birthDate);
             verifyPassword.isValidStr(password);
-            if (!password.equals(confirmPassword)) { throw new PasswordsException("Passwords do not match"); }
+            if (!password.equals(confirmPassword)) { throw new PasswordsException("Passwords does not match"); }
 
             User user = new User(email, fname, lname, birthDate, password);
             LOGGER.debug("User registered successfully with parameters: \n{}", user);
